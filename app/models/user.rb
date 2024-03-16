@@ -7,4 +7,8 @@ class User < ApplicationRecord
          :jwt_authenticatable, jwt_revocation_strategy: self
   has_many :carts
   has_many :orders
+
+  validates :username, presence: true
+  validates :role, presence: true
+  validates :address, presence: true
 end
