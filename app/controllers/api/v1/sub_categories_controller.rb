@@ -1,6 +1,6 @@
 class Api::V1::SubCategoriesController < ApplicationController
   before_action :set_category
-  before_action :set_sub_category, only: [:show, :update, :destroy]
+  before_action :set_sub_category, only: %i[show update destroy]
 
   def index
     @sub_categories = @category.sub_categories
@@ -11,7 +11,7 @@ class Api::V1::SubCategoriesController < ApplicationController
     if @sub_category
       render json: @sub_category, status: :ok
     else
-      render json: {error: 'Sub category not found!'}, status: :not_found
+      render json: { error: 'Sub category not found!' }, status: :not_found
     end
   end
 
@@ -20,7 +20,7 @@ class Api::V1::SubCategoriesController < ApplicationController
     if @sub_category.save
       render json: @sub_category, status: :created
     else
-      render json: {error: 'Sub category is not created!'}, status: :unprocessable_entity
+      render json: { errors: @sub_category.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -28,7 +28,7 @@ class Api::V1::SubCategoriesController < ApplicationController
     if @sub_category.update(sub_category_params)
       render json: @sub_category, status: :ok
     else
-      render json: {errors: @sub_category.errors.full_messages}, status: :unprocessable_entity
+      render json: { errors: @sub_category.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -36,7 +36,7 @@ class Api::V1::SubCategoriesController < ApplicationController
     if @sub_category.destroy
       render json: @sub_category
     else
-      render json: {errors: @sub_category.errors.full_messages}, status: :unprocessable_entity
+      render json: { errors: @sub_category.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -46,7 +46,7 @@ class Api::V1::SubCategoriesController < ApplicationController
     @category = Category.find(params[:category_id])
   end
 
-  def set_sub_category 
+  def set_sub_category
     @sub_category = SubCategory.find(params[:id])
   end
 
