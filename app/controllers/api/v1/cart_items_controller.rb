@@ -1,13 +1,12 @@
 class Api::V1::CartItemsController < ApplicationController
+  before_action :set_cart, only: %i[index create]
   before_action :set_cart_item, only: %i[update destroy]
 
   def index
-    @cart = Cart.find(params[:cart_id])
     render json: @cart.cart_items
   end
 
   def create
-    @cart = Cart.find(params[:cart_id])
     @product = Product.find(params[:cart_item][:product_id])
     @cart_item = @cart.cart_items.build(product_id: @product.id, quantity: 1)
     if @cart_item.save
@@ -34,6 +33,10 @@ class Api::V1::CartItemsController < ApplicationController
   end
 
   private
+
+  def set_cart
+    @cart = Cart.find(params[:cart_id])
+  end
 
   def set_cart_item
     @cart_item = CartItem.find(params[:id])
