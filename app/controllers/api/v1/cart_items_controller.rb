@@ -8,7 +8,7 @@ class Api::V1::CartItemsController < ApplicationController
 
   def create
     @product = Product.find(params[:cart_item][:product_id])
-    @cart_item = @cart.cart_items.build(product_id: @product.id, quantity: 1)
+    @cart_item = @cart.cart_items.build(product_id: @product.id, quantity: 1, price: @product.price)
     if @cart_item.save
       render json: @cart_item, status: :created
     else
@@ -35,7 +35,7 @@ class Api::V1::CartItemsController < ApplicationController
   private
 
   def set_cart
-    @cart = Cart.find(params[:cart_id])
+    @cart = current_user.cart
   end
 
   def set_cart_item
