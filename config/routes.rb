@@ -24,7 +24,13 @@ Rails.application.routes.draw do
   }, 
   controllers: {
     sessions: 'users/sessions',
-    registrations: 'users/registrations'
+    registrations: 'users/registrations',
+    passwords: 'users/passwords'
   }
+
+  namespace :users do
+    post 'passwords/forgot', to: 'passwords#forgot'
+    post 'passwords/reset', to: 'passwords#reset'
+  end
   # get "up" => "rails/health#show", as: :rails_health_check
 end
