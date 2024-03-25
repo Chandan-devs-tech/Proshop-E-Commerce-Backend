@@ -1,12 +1,17 @@
 class Api::V1::CartsController < ApplicationController
-  def show
+  def index
     @cart = current_user.cart
-    if @cart
-      render json: @cart, status: :ok
-    else
-      render json: { error: 'Cart is not found!' }, status: :not_found
-    end
+    render json: @cart
   end
+
+  # def show
+  #   @cart = current_user.cart
+  #   if @cart
+  #     render json: @cart, status: :ok
+  #   else
+  #     render json: { error: 'Cart is not found!' }, status: :not_found
+  #   end
+  # end
 
   # def create
   #   @cart = Cart.new()
