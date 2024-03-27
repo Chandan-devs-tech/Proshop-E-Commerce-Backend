@@ -1,7 +1,7 @@
 class Api::V1::PaymentsController < ApplicationController
-  before_action :set_order, only: %i[show create destroy]
+  before_action :set_order, only: %i[index create destroy]
 
-  def show
+  def index
     @payment = @order.payment
     if @payment
       render json: @payment, status: :ok
@@ -11,6 +11,9 @@ class Api::V1::PaymentsController < ApplicationController
   end
 
   def create
+    # if @order.payment.present?
+    #   render json: { error: 'Payment has already been made for this order' }, status: :unprocessable_entity
+    # else
     @payment = Payment.new(paid_amount: @order.total_amount, payment_date: Date.today)
     @payment.order = @order
     if @payment.save
@@ -18,6 +21,7 @@ class Api::V1::PaymentsController < ApplicationController
     else
       render json: { errors: @payment.errors.full_messages }, status: :unprocessable_entity
     end
+    # end
   end
 
   def destroy
