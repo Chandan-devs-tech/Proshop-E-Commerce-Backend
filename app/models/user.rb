@@ -19,6 +19,10 @@ class User < ApplicationRecord
     self.reset_password_sent_at = Time.now.utc
   end
 
+  def admin?
+    role == 'admin'
+  end
+
   private
 
   def create_user_cart
